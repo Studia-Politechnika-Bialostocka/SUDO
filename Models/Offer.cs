@@ -16,7 +16,10 @@ namespace SUDO.Models
 
         public bool NonSmoking {get; set;}
 
+        public double Cost {get; set;}
+
         public String Destination {get; set;}
         //TODO: Define destination and possible stops along the way. Define locations as objects or strings?????
+        //TODO: implement travel date
     }
 }

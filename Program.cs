@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SUDO.Areas.Identity.Data;
+using SUDO;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SudoDB");
 
@@ -12,6 +14,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddProjectServices();
 
 var app = builder.Build();
 
