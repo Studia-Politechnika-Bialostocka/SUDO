@@ -10,12 +10,13 @@ namespace SUDO.Models
     {
         public int Id {get; set;}
 
-        public virtual IdentityUser? Driver {get; set;}
+        public virtual IdentityUser Driver {get; set;}
 
         public int MaxPassengerCount {get; set;}
 
         public bool NonSmoking {get; set;}
 
+        public String Destination {get; set;}
         //TODO: Define destination and possible stops along the way. Define locations as objects or strings?????
     }
 }
