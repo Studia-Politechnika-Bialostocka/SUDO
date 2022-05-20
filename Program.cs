@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SUDO.Areas.Identity.Data;
+using SUDO.Areas.Identity;
 using SUDO;
 using SUDO.Models;
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<SUDOIdentityDbContext>(options =>
     options.UseSqlServer(connectionString));;
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddSignInManager<MySignInManager>()
     .AddEntityFrameworkStores<SUDOIdentityDbContext>();;
 
 // Add services to the container.
