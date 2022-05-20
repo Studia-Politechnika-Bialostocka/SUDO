@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SUDO.Interfaces.Offers;
 using SUDO.Models;
 using SUDO.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SUDO.Repositories
 {
@@ -23,7 +24,7 @@ namespace SUDO.Repositories
             _context.SaveChanges();
         }
         public IQueryable<Offer> GetAllEntries() {
-            return _context.Offer;
+            return _context.Offer.Include(o => o.Driver);
         }
     }
 }

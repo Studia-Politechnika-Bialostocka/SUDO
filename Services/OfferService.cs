@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SUDO.Interfaces.Offers;
+using SUDO.Interfaces.Users;
 using SUDO.ViewModels.Offer;
 using SUDO.Models;
 
@@ -18,13 +19,15 @@ namespace SUDO.Services
             _offerRepo = offerRepo;
         }
         public void AddEntry(OfferVM entry) {
-            //TODO:  retrieve current user and add to object 
             Offer offer = new Offer() {
+                DriverId = entry.DriverId,
                 Destination = entry.Destination,
                 MaxPassengerCount = entry.MaxPassengerCount,
                 NonSmoking = entry.NonSmoking,
                 Cost = entry.Cost
             };
+
+            _offerRepo.AddEntry(offer);
         }
 
         public OfferListVM GetAllEntries() {
@@ -42,6 +45,7 @@ namespace SUDO.Services
                     Cost = offer.Cost,
                     IsFull = false //TODO: have to implement a way to track how many spots are taken up either db field or query to linked customers
                 };
+                result.Offers.Add(oVM);
             }
 
             result.Count = result.Offers.Count;

@@ -15,10 +15,11 @@ namespace SUDO.ViewModels.Offer
         [Required(ErrorMessage="This field is required.")]    
         public string Destination {get; set;}
 
+        public string? DriverId {get; set;}
         public string? DriverName {get; set;}
 
         [Display(Name = "MaxPassengeCount")]
-        [Range(1899, 2022, ErrorMessage = "{0} must be between {1} and {2}.")] 
+        [Range(1, 8, ErrorMessage = "{0} must be between {1} and {2}.")] 
         [RegularExpression("^[0-9]+$", ErrorMessage = "{0} może zawierać jedynie liczby całkowite.")]
         [Required(ErrorMessage="This field is required.")]    
         public int MaxPassengerCount {get; set;}

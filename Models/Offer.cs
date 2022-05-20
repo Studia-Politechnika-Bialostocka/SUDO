@@ -10,7 +10,8 @@ namespace SUDO.Models
     {
         public int Id {get; set;}
 
-        public virtual IdentityUser Driver {get; set;}
+        public string DriverId {get; set;}
+        public virtual ApplicationUser Driver {get; set;}
 
         public int MaxPassengerCount {get; set;}
 
@@ -21,5 +22,6 @@ namespace SUDO.Models
         public String Destination {get; set;}
         //TODO: Define destination and possible stops along the way. Define locations as objects or strings?????
         //TODO: implement travel date
+        //TODO: Implement passengers many to many
     }
 }

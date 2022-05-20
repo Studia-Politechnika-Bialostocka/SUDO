@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SUDO.Areas.Identity.Data;
 using SUDO;
+using SUDO.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SudoDB");
@@ -9,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("SudoDB");
 builder.Services.AddDbContext<SUDOIdentityDbContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SUDOIdentityDbContext>();;
 
 // Add services to the container.

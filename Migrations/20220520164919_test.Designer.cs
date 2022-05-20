@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SUDO.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using SUDO.Areas.Identity.Data;
 namespace SUDO.Migrations
 {
     [DbContext(typeof(SUDOIdentityDbContext))]
-    partial class SUDOIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220520164919_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,16 +234,16 @@ namespace SUDO.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
                     b.Property<string>("Destination")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DriverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("MaxPassengerCount")
                         .HasColumnType("int");
@@ -251,7 +253,7 @@ namespace SUDO.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DriverId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Offer");
                 });
@@ -309,13 +311,13 @@ namespace SUDO.Migrations
 
             modelBuilder.Entity("SUDO.Models.Offer", b =>
                 {
-                    b.HasOne("SUDO.Models.ApplicationUser", "Driver")
+                    b.HasOne("SUDO.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Offers")
-                        .HasForeignKey("DriverId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("SUDO.Models.ApplicationUser", b =>

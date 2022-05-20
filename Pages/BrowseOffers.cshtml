@@ -1,0 +1,33 @@
+﻿@page
+@model SUDO.Pages.BrowseOffersModel
+@{
+}
+
+<h1 class="display-4">Browse Offers</h1>
+@if (Model.Offers.Offers != null) {
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Driver</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Max Passengers</th>
+                <th scope="col">Non Smoking</th>
+                <th scope="col">Is Full</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var offer in Model.Offers.Offers)
+            {
+                <tr>
+                    <th>@offer.DriverName</th>
+                    <th>@offer.Destination</th>
+                    <th>$@offer.Cost</th>
+                    <th>@offer.MaxPassengerCount</th>
+                    <th>@offer.NonSmoking</th>
+                    <th>@offer.IsFull</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
