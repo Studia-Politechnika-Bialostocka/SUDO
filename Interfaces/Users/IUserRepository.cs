@@ -12,5 +12,6 @@ namespace SUDO.Interfaces.Users
         IQueryable<ApplicationUser> GetAllEntries();
 
         ApplicationUser GetEntryById(string Id);
+
     }
 }

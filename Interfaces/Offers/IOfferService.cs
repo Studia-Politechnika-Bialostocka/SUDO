@@ -12,5 +12,8 @@ namespace SUDO.Interfaces.Offers
 
         OfferListVM GetAllEntries();
 
+        void AddPassenger(int offerId, string userId);
+
+    
     }
 }

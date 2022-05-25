@@ -3,6 +3,12 @@
 @{
 }
 
+@using Microsoft.AspNetCore.Identity
+@using SUDO.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 <h1 class="display-4">Browse Offers</h1>
 @if (Model.Offers.Offers != null) {
     <table class="table">
@@ -11,9 +17,10 @@
                 <th scope="col">Driver</th>
                 <th scope="col">Destination</th>
                 <th scope="col">Cost</th>
-                <th scope="col">Max Passengers</th>
+                <th scope="col">Passengers</th>
                 <th scope="col">Non Smoking</th>
                 <th scope="col">Is Full</th>
+                <th scope="col">Apply</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +30,18 @@
                     <th>@offer.DriverName</th>
                     <th>@offer.Destination</th>
                     <th>$@offer.Cost</th>
-                    <th>@offer.MaxPassengerCount</th>
+                    <th>@offer.PassengerCount / @offer.MaxPassengerCount</th>
                     <th>@offer.NonSmoking</th>
                     <th>@offer.IsFull</th>
+                    <th>
+                        @if (offer.IsFull || !SignInManager.IsSignedIn(User) || UserManager.GetUserId(User) == offer.DriverId){
+                            <button class="btn btn-outline-secondary" disabled>Apply</button>
+                        } else {
+                            <form method="post">
+                                <input class="btn btn-outline-success" type="submit" asp-page-handler="Apply" asp-route-OfferId="@offer.Id" value="Apply"/>
+                            </form>
+                        }
+                    </th>
                 </tr>
             }
         </tbody>

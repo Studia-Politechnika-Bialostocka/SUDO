@@ -24,7 +24,15 @@ namespace SUDO.Repositories
             _context.SaveChanges();
         }
         public IQueryable<Offer> GetAllEntries() {
-            return _context.Offer.Include(o => o.Driver);
+            return _context.Offer.Include(o => o.Driver).Include(o => o.PassengerTrips);
+        }
+
+        public Offer GetOfferById(int id) {
+            return _context.Offer.Include(o => o.PassengerTrips).First(o => o.Id == id);
+        }
+
+        public void SaveChanges() {
+            _context.SaveChanges();
         }
     }
 }

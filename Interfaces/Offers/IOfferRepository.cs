@@ -10,5 +10,9 @@ namespace SUDO.Interfaces.Offers
     {
         void AddEntry(Offer entry);
         IQueryable<Offer> GetAllEntries();
+
+        Offer GetOfferById(int id);
+
+        void SaveChanges();
     }
 }

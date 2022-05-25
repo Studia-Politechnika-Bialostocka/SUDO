@@ -29,6 +29,7 @@ namespace SUDO.ViewModels.Offer
         [Required(ErrorMessage="This field is required.")]  
         public double Cost {get; set;}
 
-        public bool? IsFull {get; set;}
+        public int PassengerCount {get; set;}
+        public bool IsFull {get; set;}
     }
 }
