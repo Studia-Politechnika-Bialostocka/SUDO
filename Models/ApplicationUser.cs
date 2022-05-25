@@ -9,5 +9,7 @@ namespace SUDO.Models
     public class ApplicationUser : IdentityUser
     {
         public virtual ICollection<Offer>? Offers {get; set;}
+
+        public ICollection<PassengerTrip> PassengerTrips {get; set;}
     }
 }

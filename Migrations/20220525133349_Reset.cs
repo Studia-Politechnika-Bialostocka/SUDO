@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SUDO.Migrations
 {
-    public partial class SchemaInit : Migration
+    public partial class Reset : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -154,6 +154,52 @@ namespace SUDO.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Offer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DriverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MaxPassengerCount = table.Column<int>(type: "int", nullable: false),
+                    NonSmoking = table.Column<bool>(type: "bit", nullable: false),
+                    Cost = table.Column<double>(type: "float", nullable: false),
+                    Destination = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Offer_AspNetUsers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PassengerTrips",
+                columns: table => new
+                {
+                    PassengerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TripId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PassengerTrips", x => new { x.PassengerId, x.TripId });
+                    table.ForeignKey(
+                        name: "FK_PassengerTrips_AspNetUsers_PassengerId",
+                        column: x => x.PassengerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PassengerTrips_Offer_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Offer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -192,6 +238,16 @@ namespace SUDO.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offer_DriverId",
+                table: "Offer",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PassengerTrips_TripId",
+                table: "PassengerTrips",
+                column: "TripId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -212,7 +268,13 @@ namespace SUDO.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "PassengerTrips");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Offer");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

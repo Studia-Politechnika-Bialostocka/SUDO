@@ -10,17 +10,19 @@ namespace SUDO.Models
     {
         public int Id {get; set;}
 
-        public string DriverId {get; set;}
-        public virtual ApplicationUser Driver {get; set;}
+        public string? DriverId {get; set;}
+        public virtual ApplicationUser? Driver {get; set;}
 
         public int MaxPassengerCount {get; set;}
+
+        public ICollection<PassengerTrip>? PassengerTrips {get; set;}
 
         public bool NonSmoking {get; set;}
 
         public double Cost {get; set;}
 
         public String Destination {get; set;}
-        //TODO: Define destination and possible stops along the way. Define locations as objects or strings?????
+        //TODO: Define destination and possible stops along the way. Define locations as objects?
         //TODO: implement travel date
         //TODO: Implement passengers many to many
     }

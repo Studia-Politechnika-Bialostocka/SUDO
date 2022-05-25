@@ -240,7 +240,6 @@ namespace SUDO.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DriverId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("MaxPassengerCount")
@@ -254,6 +253,21 @@ namespace SUDO.Migrations
                     b.HasIndex("DriverId");
 
                     b.ToTable("Offer");
+                });
+
+            modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
+                {
+                    b.Property<string>("PassengerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PassengerId", "TripId");
+
+                    b.HasIndex("TripId");
+
+                    b.ToTable("PassengerTrips");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -311,16 +325,40 @@ namespace SUDO.Migrations
                 {
                     b.HasOne("SUDO.Models.ApplicationUser", "Driver")
                         .WithMany("Offers")
-                        .HasForeignKey("DriverId")
+                        .HasForeignKey("DriverId");
+
+                    b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
+                {
+                    b.HasOne("SUDO.Models.ApplicationUser", "Passenger")
+                        .WithMany("PassengerTrips")
+                        .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
+                    b.HasOne("SUDO.Models.Offer", "Trip")
+                        .WithMany("PassengerTrips")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Passenger");
+
+                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("SUDO.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Offers");
+
+                    b.Navigation("PassengerTrips");
+                });
+
+            modelBuilder.Entity("SUDO.Models.Offer", b =>
+                {
+                    b.Navigation("PassengerTrips");
                 });
 #pragma warning restore 612, 618
         }
