@@ -18,7 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SUDO.Interfaces.DriverProfiles;
 using SUDO.Models;
+using SUDO.ViewModels.DriverProfiles;
 
 namespace SUDO.Areas.Identity.Pages.Account
 {
@@ -31,10 +33,13 @@ namespace SUDO.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        private readonly IDriverProfileService _driverProfileService;
+
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
+            IDriverProfileService driverProfileService,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -42,6 +47,7 @@ namespace SUDO.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _driverProfileService = driverProfileService;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -130,6 +136,8 @@ namespace SUDO.Areas.Identity.Pages.Account
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    DriverProfileVM vm = new DriverProfileVM{UserId=userId,OpinesAboutUser= new List<Opine>(),UserOpines=new List<Opine>()};
+                    _driverProfileService.AddEntry(vm);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
@@ -153,6 +161,7 @@ namespace SUDO.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+                
             }
 
             // If we got this far, something failed, redisplay form

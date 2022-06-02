@@ -12,6 +12,8 @@ namespace SUDO.ViewModels.DriverProfiles
         public int Id {get;set;}
 
         public string? UserId {get;set;}
+
+        public string? UserName {get;set;}
         public List<Opine>? OpinesAboutUser {get;set;}
         public List<Opine>? UserOpines {get;set;}
     }

@@ -10,8 +10,8 @@ namespace SUDO.Models
     {
         public int Id {get;set;}
         public ApplicationUser User {get; set;}
-        public List<Opine> OpinesAboutUser {get;set;}
-        public List<Opine> UserOpines {get;set;}
+        public List<Opine>? OpinesAboutUser {get;set;}
+        public List<Opine>? UserOpines {get;set;}
     }
     
 }

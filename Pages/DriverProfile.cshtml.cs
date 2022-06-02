@@ -27,8 +27,7 @@ namespace SUDO.Pages
         public void OnGet()
         {
             CurrentUserId = _userManager.GetUserId(User);
-            DriverProfileVM vm = new DriverProfileVM{Id = 1,UserId=CurrentUserId,OpinesAboutUser= new List<Opine>(),UserOpines=new List<Opine>()};
-            _driverProfileService.AddEntry(vm);
+            
             DriverProfile = _driverProfileService.GetDriverProfileByCurrentUser(CurrentUserId);
         }
     }

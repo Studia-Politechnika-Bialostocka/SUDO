@@ -29,7 +29,7 @@ namespace SUDO.Repositories
 
         public DriverProfile GetDriverProfileByUser(string id)
         {
-           return  _context.DriverProfiles.Where(x=>x.User.Id == id).First();
+            return  _context.DriverProfiles.Include(m=>m.User).Where(x=>x.User.Id == id).First();
         }
 
         public void SaveChanges() {

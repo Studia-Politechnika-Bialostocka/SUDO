@@ -26,7 +26,6 @@ namespace SUDO.Services
             ApplicationUser UserP = _userRepo.GetEntryById(entry.UserId);
             DriverProfile driverProfile = new DriverProfile()
             {
-                Id = entry.Id,
                 User = UserP,
                 OpinesAboutUser = entry.OpinesAboutUser,
                 UserOpines = entry.UserOpines,
@@ -46,6 +45,7 @@ namespace SUDO.Services
                 {
                     Id = driver.Id,
                     UserId = driver.User.Id,
+                    UserName = driver.User.UserName,
                     OpinesAboutUser = driver.OpinesAboutUser,
                     UserOpines = driver.UserOpines
                 };
@@ -63,6 +63,7 @@ namespace SUDO.Services
                 {
                     Id = driver.Id,
                     UserId = driver.User.Id,
+                    UserName = driver.User.UserName,
                     OpinesAboutUser = driver.OpinesAboutUser,
                     UserOpines = driver.UserOpines
                 };
