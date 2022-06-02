@@ -224,6 +224,24 @@ namespace SUDO.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("SUDO.Models.DriverProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DriverProfiles");
+                });
+
             modelBuilder.Entity("SUDO.Models.Offer", b =>
                 {
                     b.Property<int>("Id")
@@ -253,6 +271,36 @@ namespace SUDO.Migrations
                     b.HasIndex("DriverId");
 
                     b.ToTable("Offer");
+                });
+
+            modelBuilder.Entity("SUDO.Models.Opine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DriverProfileId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DriverProfileId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverProfileId");
+
+                    b.HasIndex("DriverProfileId1");
+
+                    b.ToTable("Opine");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
@@ -321,6 +369,15 @@ namespace SUDO.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SUDO.Models.DriverProfile", b =>
+                {
+                    b.HasOne("SUDO.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SUDO.Models.Offer", b =>
                 {
                     b.HasOne("SUDO.Models.ApplicationUser", "Driver")
@@ -328,6 +385,17 @@ namespace SUDO.Migrations
                         .HasForeignKey("DriverId");
 
                     b.Navigation("Driver");
+                });
+
+            modelBuilder.Entity("SUDO.Models.Opine", b =>
+                {
+                    b.HasOne("SUDO.Models.DriverProfile", null)
+                        .WithMany("OpinesAboutUser")
+                        .HasForeignKey("DriverProfileId");
+
+                    b.HasOne("SUDO.Models.DriverProfile", null)
+                        .WithMany("UserOpines")
+                        .HasForeignKey("DriverProfileId1");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
@@ -354,6 +422,13 @@ namespace SUDO.Migrations
                     b.Navigation("Offers");
 
                     b.Navigation("PassengerTrips");
+                });
+
+            modelBuilder.Entity("SUDO.Models.DriverProfile", b =>
+                {
+                    b.Navigation("OpinesAboutUser");
+
+                    b.Navigation("UserOpines");
                 });
 
             modelBuilder.Entity("SUDO.Models.Offer", b =>
