@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using SUDO.Areas.Identity.Data;
 using SUDO.Areas.Identity;
 using SUDO;
 using SUDO.Models;
+using SUDO.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("SudoDB");
+var connectionString = builder.Configuration.GetConnectionString("MyDbConnection") ?? throw new InvalidOperationException("Connection string 'SudoDB' not found.");
 
 builder.Services.AddDbContext<SUDOIdentityDbContext>(options =>
     options.UseSqlServer(connectionString));;
@@ -17,6 +19,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddProjectServices();
 
