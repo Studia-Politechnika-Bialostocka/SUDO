@@ -11,6 +11,8 @@ public class SUDOIdentityDbContext : IdentityDbContext<ApplicationUser>
     public SUDOIdentityDbContext(DbContextOptions<SUDOIdentityDbContext> options) : base(options) {}
     public DbSet<Offer> Offer {get; set;}
     public DbSet<PassengerTrip> PassengerTrips {get; set;}
+    public DbSet<DriverProfile> DriverProfiles {get;set;}
+    public DbSet<Opine> Opine {get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
