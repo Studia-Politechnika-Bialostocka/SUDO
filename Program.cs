@@ -15,6 +15,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddSignInManager<MySignInManager>()
     .AddEntityFrameworkStores<SUDOIdentityDbContext>();;
 
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Lockout settings.
+    options.User.RequireUniqueEmail = true;
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
