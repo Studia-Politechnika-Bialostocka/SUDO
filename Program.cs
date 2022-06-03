@@ -8,7 +8,7 @@ using SUDO.Models;
 using SUDO.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("MyDbConnection") ?? throw new InvalidOperationException("Connection string 'SudoDB' not found.");
+var connectionString = builder.Configuration.GetConnectionString("SudoDB") ?? throw new InvalidOperationException("Connection string 'SudoDB' not found.");
 
 builder.Services.AddDbContext<SUDOIdentityDbContext>(options =>
     options.UseSqlServer(connectionString));;

@@ -7,6 +7,7 @@ using SUDO.Interfaces.Users;
 using SUDO.Interfaces.DriverProfiles;
 using SUDO.Services;
 using SUDO.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace SUDO
 {
@@ -18,6 +19,7 @@ namespace SUDO
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IDriverProfileService, DriverProfileSevice>();
             services.AddTransient<IDriverProfileRepository, DriverProfileRepository>();
+            services.AddTransient<IEmailSender, EmailSender>();
             return services;
         }
     }
