@@ -22,8 +22,9 @@
                     @if (Model.Offer.IsFull){
                         <button class="btn btn-outline-secondary" disabled>Full</button>
                     } else {
-                        <form method="post">
+                        <form method="post" style="display: inline">
                             <input class="btn btn-outline-success" type="submit" asp-page-handler="Accept" asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Accept"/>
+                            <input class="btn btn-outline-danger" type="submit" asp-page-handler="Remove"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Remove"/>
                         </form>
                     }
                 </th>
@@ -47,10 +48,10 @@
                 <th>@pt.Passenger.UserName</th>
                 <th>
                     <button class="btn btn-outline-primary">View Profile</button>
-                    @* <form method="post">
-                        <input class="btn btn-outline-success" type="submit" asp-page-handler="Apply" asp-route-OfferId="@offer.Id" value="Apply"/>
-                    </form> *@
-                    <button class="btn btn-outline-danger">Remove</button>
+                    <form method="post" style="display: inline">
+                        <input class="btn btn-outline-dark" type="submit" asp-page-handler="MoveToPending"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Move To Pending"/>
+                        <input class="btn btn-outline-danger" type="submit" asp-page-handler="Remove"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Remove"/>
+                    </form>
                 </th>
             </tr>
         }

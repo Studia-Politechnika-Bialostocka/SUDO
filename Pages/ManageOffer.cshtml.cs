@@ -33,8 +33,17 @@ namespace SUDO.Pages
         }
 
         public IActionResult OnPostAccept(int OfferId, string PassengerId) {
-            _offerService.ConfirmPassenger(OfferId, PassengerId);
+            _offerService.SetPassengerStatus(OfferId, PassengerId, true);
+            return Redirect("/ManageOffer/" + OfferId);
+        }
 
+        public IActionResult OnPostMoveToPending(int OfferId, string PassengerId) {
+            _offerService.SetPassengerStatus(OfferId, PassengerId, false);
+            return Redirect("/ManageOffer/" + OfferId);
+        }
+
+        public IActionResult OnPostRemove(int OfferId, string PassengerId) {
+            _offerService.RemovePassengerApplication(OfferId, PassengerId);
             return Redirect("/ManageOffer/" + OfferId);
         }
     }

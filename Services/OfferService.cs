@@ -102,16 +102,20 @@ namespace SUDO.Services
             offer.PassengerTrips.Add(pt);
             _offerRepo.SaveChanges();
         }
-
-        public void ConfirmPassenger(int OfferId, string PassengerId) {
+        
+        public void SetPassengerStatus(int OfferId, string PassengerId, bool status) {
             Offer offer = _offerRepo.GetOfferById(OfferId);
-            Console.WriteLine("Passenger id: " + PassengerId);
-            foreach (var p in offer.PassengerTrips) {
-                Console.WriteLine("pt passenger id: " + p.PassengerId);
-            }
             PassengerTrip pt = offer.PassengerTrips.Where(pt => pt.PassengerId == PassengerId).First();
 
-            pt.Accepted = true;
+            pt.Accepted = status;
+            _offerRepo.SaveChanges();
+        }
+
+        public void RemovePassengerApplication(int OfferId, string PassengerId) {
+            Offer offer = _offerRepo.GetOfferById(OfferId);
+            PassengerTrip pt = offer.PassengerTrips.Where(pt => pt.PassengerId == PassengerId).First();
+
+            offer.PassengerTrips.Remove(pt);
             _offerRepo.SaveChanges();
         }
     }

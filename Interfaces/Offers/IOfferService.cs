@@ -10,7 +10,9 @@ namespace SUDO.Interfaces.Offers
     {
         void AddEntry(OfferVM entry);
 
-        void ConfirmPassenger(int OfferId, string PassengerId);
+        void SetPassengerStatus(int OfferId, string PassengerId, bool status);
+
+        void RemovePassengerApplication(int OfferId, string PassengerId);
 
         OfferListVM GetAllEntries();
 
