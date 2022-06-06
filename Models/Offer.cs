@@ -15,15 +15,18 @@ namespace SUDO.Models
 
         public int MaxPassengerCount {get; set;}
 
-        public ICollection<PassengerTrip>? PassengerTrips {get; set;}
+        public virtual ICollection<PassengerTrip>? PassengerTrips {get; set;}
 
         public bool NonSmoking {get; set;}
 
         public double Cost {get; set;}
 
         public String Destination {get; set;}
-        //TODO: Define destination and possible stops along the way. Define locations as objects?
-        //TODO: implement travel date
-        //TODO: Implement passengers many to many
+
+        public String Stops {get; set;}
+
+        public DateTime Departure {get; set;}
+        public DateTime Arrival {get; set;}
+        
     }
 }

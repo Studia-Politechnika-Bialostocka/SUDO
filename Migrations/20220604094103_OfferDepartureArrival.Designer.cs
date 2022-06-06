@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SUDO.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using SUDO.Areas.Identity.Data;
 namespace SUDO.Migrations
 {
     [DbContext(typeof(SUDOIdentityDbContext))]
-    partial class SUDOIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220604094103_OfferDepartureArrival")]
+    partial class OfferDepartureArrival
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,9 +322,6 @@ namespace SUDO.Migrations
 
                     b.Property<int?>("TripId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Accepted")
-                        .HasColumnType("bit");
 
                     b.HasKey("PassengerId", "TripId");
 

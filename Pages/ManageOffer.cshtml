@@ -1,0 +1,58 @@
+﻿@page "{offerId}"
+@model SUDO.Pages.ManageOfferModel
+@{
+
+
+}
+<h5 class="display-5">Pending</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Candidate</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pt in Model.PendingApplications)
+        {
+            <tr>
+                <th>@pt.Passenger.UserName</th>
+                <th>
+                    <button class="btn btn-outline-primary">View Profile</button>
+                    @if (Model.Offer.IsFull){
+                        <button class="btn btn-outline-secondary" disabled>Full</button>
+                    } else {
+                        <form method="post">
+                            <input class="btn btn-outline-success" type="submit" asp-page-handler="Accept" asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Accept"/>
+                        </form>
+                    }
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h5 class="display-5">Current Group (@Model.Offer.PassengerCount/@Model.Offer.MaxPassengerCount)</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Passenger</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pt in Model.AcceptedApplications)
+        {
+            <tr>
+                <th>@pt.Passenger.UserName</th>
+                <th>
+                    <button class="btn btn-outline-primary">View Profile</button>
+                    @* <form method="post">
+                        <input class="btn btn-outline-success" type="submit" asp-page-handler="Apply" asp-route-OfferId="@offer.Id" value="Apply"/>
+                    </form> *@
+                    <button class="btn btn-outline-danger">Remove</button>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>

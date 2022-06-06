@@ -32,9 +32,12 @@ namespace SUDO.Pages
         }
 
         public IActionResult OnPost() {
+            if (Offer.Departure < DateTime.Now) 
+                ModelState.AddModelError("", "Departure cannot be set to a past date or time");
+            if (Offer.Arrival < Offer.Departure) 
+                ModelState.AddModelError("", "Arrival can not be earlier than departure");
             
             if (ModelState.IsValid) {
-                Console.WriteLine("Cost: " + Offer.Cost);
                 Offer.DriverId = _userManager.GetUserId(User);;
                 _offerService.AddEntry(Offer);
                 return RedirectToPage("./Index");

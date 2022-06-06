@@ -16,6 +16,8 @@
             <tr>
                 <th scope="col">Driver</th>
                 <th scope="col">Destination</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
                 <th scope="col">Cost</th>
                 <th scope="col">Passengers</th>
                 <th scope="col">Non Smoking</th>
@@ -29,12 +31,16 @@
                 <tr>
                     <th>@offer.DriverName</th>
                     <th>@offer.Destination</th>
+                    <th>@offer.Departure.ToString("MMM dd, yyyy | HH:mm")</th>
+                    <th>@offer.Arrival.ToString("MMM dd, yyyy | HH:mm")</th>
                     <th>$@offer.Cost</th>
                     <th>@offer.PassengerCount / @offer.MaxPassengerCount</th>
                     <th>@offer.NonSmoking</th>
                     <th>@offer.IsFull</th>
                     <th>
-                        @if (offer.IsFull || !SignInManager.IsSignedIn(User) || UserManager.GetUserId(User) == offer.DriverId){
+                        @if (UserManager.GetUserId(User) == offer.DriverId){
+                            <a class="btn btn-outline-primary" asp-page="/ManageOffer" asp-route-offerId="@offer.Id" >Manage</a>
+                        } else if (offer.IsFull || !SignInManager.IsSignedIn(User)) {
                             <button class="btn btn-outline-secondary" disabled>Apply</button>
                         } else {
                             <form method="post">

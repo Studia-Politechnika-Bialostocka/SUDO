@@ -10,10 +10,14 @@ namespace SUDO.Interfaces.Offers
     {
         void AddEntry(OfferVM entry);
 
+        void ConfirmPassenger(int OfferId, string PassengerId);
+
         OfferListVM GetAllEntries();
+
+        OfferManagingVM GetOfferById(int id);
 
         void AddPassenger(int offerId, string userId);
 
-    
+        
     }
 }

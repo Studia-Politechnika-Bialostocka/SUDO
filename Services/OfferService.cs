@@ -14,9 +14,11 @@ namespace SUDO.Services
     {
 
         private readonly IOfferRepository _offerRepo;
+        private readonly IUserRepository _userRepo;
 
-        public OfferService(IOfferRepository offerRepo) {
+        public OfferService(IOfferRepository offerRepo, IUserRepository userRepo) {
             _offerRepo = offerRepo;
+            _userRepo = userRepo;
         }
         public void AddEntry(OfferVM entry) {
             Offer offer = new Offer() {
@@ -24,7 +26,9 @@ namespace SUDO.Services
                 Destination = entry.Destination,
                 MaxPassengerCount = entry.MaxPassengerCount,
                 NonSmoking = entry.NonSmoking,
-                Cost = entry.Cost
+                Cost = entry.Cost,
+                Departure = entry.Departure,
+                Arrival = entry.Arrival
             };
 
             _offerRepo.AddEntry(offer);
@@ -36,7 +40,7 @@ namespace SUDO.Services
 
             result.Offers = new List<OfferVM>();
             foreach(var offer in offers) {
-                int passengerCount = offer.PassengerTrips.Count;
+                int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
 
                 var oVM = new OfferVM() {
                     Id = offer.Id,
@@ -47,7 +51,9 @@ namespace SUDO.Services
                     NonSmoking = offer.NonSmoking,
                     Cost = offer.Cost,
                     PassengerCount = passengerCount,
-                    IsFull = passengerCount >= offer.MaxPassengerCount
+                    IsFull = passengerCount >= offer.MaxPassengerCount,
+                    Departure = offer.Departure,
+                    Arrival = offer.Arrival
                 };
                 result.Offers.Add(oVM);
             }
@@ -56,16 +62,37 @@ namespace SUDO.Services
             return result;
         }
 
+        public OfferManagingVM GetOfferById(int id) {
+            Offer offer = _offerRepo.GetOfferById(id);
+
+            int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
+            Console.WriteLine("Passenger Count: " + offer.PassengerTrips.Count);
+
+            var oVM = new OfferManagingVM() {
+                Id = offer.Id,
+                Destination = offer.Destination,
+                DriverId = offer.DriverId,
+                PassengerCount = passengerCount,
+                MaxPassengerCount = offer.MaxPassengerCount,
+                PassengerTrips = offer.PassengerTrips,
+                IsFull = passengerCount >= offer.MaxPassengerCount,
+            };
+            return oVM;
+        }
+
         public void AddPassenger(int offerId, string userId) {
-            Console.WriteLine("userID: " + userId);
             Offer offer = _offerRepo.GetOfferById(offerId);
+            ApplicationUser user = _userRepo.GetEntryById(userId);
+
             if (offer.DriverId == userId) 
                 return; //TODO: throw an exception or have this method return a status code which then causes redirect to an error page
 
             if (offer.PassengerTrips.Any(p => p.PassengerId == userId))
                 return;//TODO: see above
 
-            //TODO: Add check if offer date is colliding with a trip that the user is already signed up for
+            if (user.PassengerTrips.Any(p => p.Trip.Departure <= offer.Arrival && p.Trip.Arrival >= offer.Departure))
+                return; //see above
+
 
             PassengerTrip pt = new PassengerTrip() {
                 TripId = offerId,
@@ -73,6 +100,18 @@ namespace SUDO.Services
             };
 
             offer.PassengerTrips.Add(pt);
+            _offerRepo.SaveChanges();
+        }
+
+        public void ConfirmPassenger(int OfferId, string PassengerId) {
+            Offer offer = _offerRepo.GetOfferById(OfferId);
+            Console.WriteLine("Passenger id: " + PassengerId);
+            foreach (var p in offer.PassengerTrips) {
+                Console.WriteLine("pt passenger id: " + p.PassengerId);
+            }
+            PassengerTrip pt = offer.PassengerTrips.Where(pt => pt.PassengerId == PassengerId).First();
+
+            pt.Accepted = true;
             _offerRepo.SaveChanges();
         }
     }
