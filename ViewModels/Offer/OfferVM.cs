@@ -12,7 +12,7 @@ namespace SUDO.ViewModels.Offer
         [Required(ErrorMessage="This field is required.")]    
         public string Destination {get; set;}
 
-        public string Stops {get; set;}
+        public string? Stops {get; set;}
 
         public string? DriverId {get; set;}
         public string? DriverName {get; set;}
