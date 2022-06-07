@@ -2,6 +2,16 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
+using System.Threading.Tasks;
+using Microsoft.Azure.KeyVault;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Services.AppAuthentication;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
 
 namespace SUDO.Services;
 
@@ -20,11 +30,23 @@ public class EmailSender : IEmailSender
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
     {
-        if (string.IsNullOrEmpty(Options.SendGridKey))
+        SecretClientOptions options = new SecretClientOptions()
         {
-            throw new Exception("Null SendGridKey");
-        }
-        await Execute(Options.SendGridKey, subject, message, toEmail);
+            Retry =
+            {
+                Delay= TimeSpan.FromSeconds(2),
+                MaxDelay = TimeSpan.FromSeconds(16),
+                MaxRetries = 5,
+                Mode = RetryMode.Exponential
+            }
+        };
+        var client = new SecretClient(new Uri("https://PekKluczy.vault.azure.net/"), new DefaultAzureCredential(),options);
+
+        KeyVaultSecret secret = client.GetSecret("SendGridKey");
+
+        string secretValue = secret.Value;
+        await Execute(secretValue, subject, message, toEmail);
+
     }
 
     public async Task Execute(string apiKey, string subject, string message, string toEmail)
