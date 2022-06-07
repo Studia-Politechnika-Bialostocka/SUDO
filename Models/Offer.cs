@@ -23,7 +23,7 @@ namespace SUDO.Models
 
         public String Destination {get; set;}
 
-        public String Stops {get; set;}
+        public String? Stops {get; set;}
 
         public DateTime Departure {get; set;}
         public DateTime Arrival {get; set;}

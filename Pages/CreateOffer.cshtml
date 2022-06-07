@@ -13,6 +13,10 @@
             <input asp-for="Offer.Destination" class="form-control" placeholder="Destination"/>
             <label class="text-muted" for="destination ">Destination</label>
         </div>
+        <div class="form-floating">
+            <input asp-for="Offer.Stops" class="form-control" placeholder="Stops (comma seperated)"/>
+            <label class="text-muted" for="Stops ">Stops (comma seperated)</label>
+        </div>
 
         <div class="form-floating">
             <input asp-for="Offer.MaxPassengerCount" class="form-control" min="1" max="8" placeholder="Maximum passengers"/>

@@ -24,6 +24,7 @@ namespace SUDO.Services
             Offer offer = new Offer() {
                 DriverId = entry.DriverId,
                 Destination = entry.Destination,
+                Stops = entry.Stops,
                 MaxPassengerCount = entry.MaxPassengerCount,
                 NonSmoking = entry.NonSmoking,
                 Cost = entry.Cost,
@@ -45,6 +46,7 @@ namespace SUDO.Services
                 var oVM = new OfferVM() {
                     Id = offer.Id,
                     Destination = offer.Destination,
+                    Stops = offer.Stops,
                     DriverName = offer.Driver.UserName,
                     DriverId = offer.DriverId,
                     MaxPassengerCount = offer.MaxPassengerCount,
