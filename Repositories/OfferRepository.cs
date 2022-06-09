@@ -23,6 +23,11 @@ namespace SUDO.Repositories
             _context.Offer.Add(entry);
             _context.SaveChanges();
         }
+
+        public void DeleteEntry(Offer entry) {
+            _context.Offer.Remove(entry);
+            _context.SaveChanges();
+        }
         public IQueryable<Offer> GetAllEntries() {
             return _context.Offer.Include(o => o.Driver).Include(o => o.PassengerTrips);
         }

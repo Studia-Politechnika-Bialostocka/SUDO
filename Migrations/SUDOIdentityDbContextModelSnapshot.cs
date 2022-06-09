@@ -239,7 +239,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DriverProfiles");
+                    b.ToTable("DriverProfiles", (string)null);
                 });
 
             modelBuilder.Entity("SUDO.Models.Offer", b =>
@@ -279,7 +279,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Offer");
+                    b.ToTable("Offer", (string)null);
                 });
 
             modelBuilder.Entity("SUDO.Models.Opine", b =>
@@ -322,7 +322,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverProfileId1");
 
-                    b.ToTable("Opine");
+                    b.ToTable("Opine", (string)null);
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
@@ -340,7 +340,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("PassengerTrips");
+                    b.ToTable("PassengerTrips", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

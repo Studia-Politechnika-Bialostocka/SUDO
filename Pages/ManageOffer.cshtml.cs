@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SUDO.Interfaces.Offers;
 using SUDO.Models;
 using SUDO.ViewModels.Offer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SUDO.Pages
 {
+    [Authorize]
     public class ManageOfferModel : PageModel
     {
         private readonly IOfferService _offerService;
@@ -45,6 +47,11 @@ namespace SUDO.Pages
         public IActionResult OnPostRemove(int OfferId, string PassengerId) {
             _offerService.RemovePassengerApplication(OfferId, PassengerId);
             return Redirect("/ManageOffer/" + OfferId);
+        }
+
+        public IActionResult OnPostDelete(int OfferId) {
+            _offerService.DeleteOffer(OfferId);
+            return RedirectToPage("./BrowseOffers");
         }
     }
 }

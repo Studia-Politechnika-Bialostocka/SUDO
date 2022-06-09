@@ -9,6 +9,8 @@ namespace SUDO.Interfaces.Offers
     public interface IOfferRepository
     {
         void AddEntry(Offer entry);
+
+        void DeleteEntry(Offer entry);
         IQueryable<Offer> GetAllEntries();
 
         IQueryable<Offer> GetEntriesForDriver(string userId);

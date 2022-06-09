@@ -49,11 +49,14 @@
                 <th>
                     <button class="btn btn-outline-primary">View Profile</button>
                     <form method="post" style="display: inline">
-                        <input class="btn btn-outline-dark" type="submit" asp-page-handler="MoveToPending"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Move To Pending"/>
-                        <input class="btn btn-outline-danger" type="submit" asp-page-handler="Remove"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Remove"/>
+                        <input class="btn btn-outline-dark" type="submit" asp-page-handler="MoveToPending"asp-route-OfferId="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Move To Pending"/>
+                        <input class="btn btn-outline-danger" type="submit" asp-page-handler="Remove"asp-route-OfferId="@Model.Offer.Id" asp-route-PassengerId="@pt.PassengerId" value="Remove"/>
                     </form>
                 </th>
             </tr>
         }
     </tbody>
 </table>
+<form method="post" style="display: inline">
+    <input class="btn btn-danger" type="submit" asp-page-handler="Delete"asp-route-offerId="@Model.Offer.Id" value="Delete Offer"/>
+</form>

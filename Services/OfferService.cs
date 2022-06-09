@@ -35,6 +35,13 @@ namespace SUDO.Services
             _offerRepo.AddEntry(offer);
         }
 
+        public void DeleteOffer(int offerId) {
+            Offer offer = _offerRepo.GetOfferById(offerId);
+            offer.PassengerTrips = new List<PassengerTrip>();
+            _offerRepo.SaveChanges();
+            _offerRepo.DeleteEntry(offer);
+        }
+
         public OfferListVM GetAllEntries() {
             var offers = _offerRepo.GetAllEntries();
             OfferListVM result = new OfferListVM();
