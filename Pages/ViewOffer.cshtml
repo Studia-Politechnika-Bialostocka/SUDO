@@ -9,8 +9,10 @@
 
 <h5 class="display-5">Offer</h5>
 @if(@Model.CurrentDateTime > @Model.Offer.Arrival && @Model.Status == "Accepted") {
-    <button class="btn btn-success">Rate Driver</button>
+    <a class="btn btn-primary"asp-page="/CreateOpine" asp-route-offerId="@Model.Offer.Id" >Rate Trip</a>
 }
+<a class="btn btn-outline-primary"asp-page="/DriverProfileId" asp-route-driverProfileId="@Model.Offer.DriverId" >Driver Profile</a>
+
 <ul class="list-group list-group-flush">
     <li class="list-group-item"><b>Driver</b> @Model.Offer.DriverName</li>
     <li class="list-group-item"><b>Destination</b> @Model.Offer.Destination</li>

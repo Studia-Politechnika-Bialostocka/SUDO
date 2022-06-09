@@ -6,6 +6,7 @@ using SUDO.Interfaces.Offers;
 using SUDO.Interfaces.Users;
 using SUDO.Interfaces.DriverProfiles;
 using SUDO.Interfaces.Opines;
+using SUDO.Interfaces.Users;
 using SUDO.Services;
 using SUDO.Repositories;
 
@@ -17,6 +18,7 @@ namespace SUDO
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IOfferRepository, OfferRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IDriverProfileService, DriverProfileSevice>();
             services.AddTransient<IDriverProfileRepository, DriverProfileRepository>();
             services.AddTransient<IOpinesRepository, OpineRepository>();

@@ -31,6 +31,10 @@ namespace SUDO.Repositories
             return _context.Offer.Include(o => o.PassengerTrips).First(o => o.Id == id);
         }
 
+        public IQueryable<Offer> GetEntriesForDriver(string userId) {
+            return _context.Offer.Include(o => o.Driver).Include(o => o.PassengerTrips).Where(o => o.DriverId == userId);
+        }
+
         public void SaveChanges() {
             _context.SaveChanges();
         }

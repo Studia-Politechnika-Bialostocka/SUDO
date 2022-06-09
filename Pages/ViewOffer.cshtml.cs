@@ -34,7 +34,8 @@ namespace SUDO.Pages
             Offer = _offerService.GetOfferViewById(offerId);
             Passengers = Offer.PassengerTrips.Where(pt => pt.Accepted).ToList();
 
-            if (!Offer.PassengerTrips.Any(p => p.PassengerId == CurrentUserId))                         Status = "None";
+            if (CurrentUserId == Offer.DriverId)                                                        Status = "Driver";
+            else if (!Offer.PassengerTrips.Any(p => p.PassengerId == CurrentUserId))                    Status = "None";
             else if (!Offer.PassengerTrips.Where(p => p.PassengerId == CurrentUserId).First().Accepted) Status = "Pending";
             else                                                                                        Status = "Accepted";
 

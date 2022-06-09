@@ -20,6 +20,8 @@ namespace SUDO.Interfaces.Offers
 
         OfferViewingVM GetOfferViewById(int id);
 
+        OfferListVM GetOffersForDriver(string userId);
+
         void AddPassenger(int offerId, string userId);
 
         

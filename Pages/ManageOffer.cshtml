@@ -18,7 +18,7 @@
             <tr>
                 <th>@pt.Passenger.UserName</th>
                 <th>
-                    <button class="btn btn-outline-primary">View Profile</button>
+                    <a class="btn btn-outline-primary" asp-page="/DriverProfileId" asp-route-driverProfileId="@pt.PassengerId" >View Profile</a>
                     @if (Model.Offer.IsFull){
                         <button class="btn btn-outline-secondary" disabled>Full</button>
                     } else {

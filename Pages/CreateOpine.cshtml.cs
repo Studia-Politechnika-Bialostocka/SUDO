@@ -23,7 +23,7 @@ namespace SUDO.Pages
         [BindProperty]
         public OpineVM Opine {get; set;}
 
-        public OfferManagingVM Offer {get;set;} 
+        public OfferViewingVM Offer {get;set;} 
 
         public CreateOpineModel(IOfferService offerService, UserManager<ApplicationUser> userManager,IOpinesService opineService,IDriverProfileService driverService) {
             _offerService = offerService;
@@ -31,16 +31,19 @@ namespace SUDO.Pages
             _opineService = opineService;
             _driverService = driverService;
         }
-        public void OnGet(int offerId)
+        public IActionResult OnGet(int offerId)
         {
-            //TODO check if CurrentUserId is in offer
+            Offer = _offerService.GetOfferViewById(offerId);
+            if (!Offer.PassengerTrips.Any(pt => pt.PassengerId == _userManager.GetUserId(User)))
+                return RedirectToPage("./BrowseOffers");
+
+            return Page();
         }
         public IActionResult OnPost(int offerId) {
-            Offer = _offerService.GetOfferManageById(offerId);
+            Offer = _offerService.GetOfferViewById(offerId);
             Opine.CurrentUserId = _userManager.GetUserId(User);
             Opine.CommentedUserId = Offer.DriverId;
-            Console.WriteLine("halo"+Opine.CommentedUserId);
-                if (ModelState.IsValid) {
+            if (ModelState.IsValid) {
                 Console.WriteLine("halo"+offerId);
                 _driverService.AddOpine(Opine,_userManager.GetUserId(User),Offer.DriverId);
                 return Redirect("/DriverProfileId/"+Offer.DriverId);

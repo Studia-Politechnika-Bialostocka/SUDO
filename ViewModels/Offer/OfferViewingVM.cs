@@ -13,6 +13,8 @@ namespace SUDO.ViewModels.Offer
 
         public string? DriverName {get; set;}
 
+        public string DriverId {get; set;}
+
         public int MaxPassengerCount {get; set;}
 
         public bool NonSmoking {get; set;}

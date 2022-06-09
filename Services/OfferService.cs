@@ -64,6 +64,34 @@ namespace SUDO.Services
             return result;
         }
 
+        public OfferListVM GetOffersForDriver(string userId) {
+            var offers = _offerRepo.GetEntriesForDriver(userId);
+            OfferListVM result = new OfferListVM();
+
+            result.Offers = new List<OfferVM>();
+            foreach(var offer in offers) {
+                int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
+            
+                var oVM = new OfferVM() {
+                    Id = offer.Id,
+                    DriverName = offer.Driver.UserName,
+                    Destination = offer.Destination,
+                    PassengerCount = passengerCount,
+                    MaxPassengerCount = offer.MaxPassengerCount,
+                    IsFull = passengerCount >= offer.MaxPassengerCount,
+                    NonSmoking = offer.NonSmoking,
+                    Stops = offer.Stops,
+                    Departure = offer.Departure,
+                    Arrival = offer.Arrival,
+                    Cost = offer.Cost
+                };
+                result.Offers.Add(oVM);
+            }
+
+            result.Count = result.Offers.Count;
+            return result;
+        }
+
         public OfferManagingVM GetOfferManageById(int id) {
             Offer offer = _offerRepo.GetOfferById(id);
 
@@ -89,6 +117,7 @@ namespace SUDO.Services
             
             var oVM = new OfferViewingVM() {
                 Id = offer.Id,
+                DriverId = offer.DriverId,
                 DriverName = offer.Driver.UserName,
                 Destination = offer.Destination,
                 PassengerCount = passengerCount,

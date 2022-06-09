@@ -4,6 +4,10 @@
     ViewData["Title"] = "CreateOpine";
 }
 <div>
+    @if(@Model.Offer.Arrival > DateTime.Now) {
+        <p>This trip hasn't finished yet. Post your opinion after the trip.</p>
+    }
+    @if(@Model.Offer.Arrival <= DateTime.Now) {
     <h1 class="display-4">Create an Opine</h1>
     <form method="post">
 
@@ -25,7 +29,7 @@
             <input asp-for="Opine.Comment" class="form-control" placeholder="Comment" />
             <label class="text-muted" for="Stops ">Comment</label>
         </div>
-
         <button type="submit" class="btn btn-primary">submit</button>
     </form>
+    }
 </div>

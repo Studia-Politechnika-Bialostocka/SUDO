@@ -1,0 +1,42 @@
+﻿@page
+@model SUDO.Pages.MyOffersModel
+@{
+}
+
+<h5 class="display-5">My Offers</h5>
+@if (Model.Offers.Offers != null) {
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Driver</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Passengers</th>
+                <th scope="col">Non Smoking</th>
+                <th scope="col">Is Full</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var offer in Model.Offers.Offers)
+            {
+                <tr>
+                    <th>@offer.DriverName</th>
+                    <th>@offer.Destination</th>
+                    <th>@offer.Departure.ToString("MMM dd, yyyy | HH:mm")</th>
+                    <th>@offer.Arrival.ToString("MMM dd, yyyy | HH:mm")</th>
+                    <th>$@offer.Cost</th>
+                    <th>@offer.PassengerCount / @offer.MaxPassengerCount</th>
+                    <th>@offer.NonSmoking</th>
+                    <th>@offer.IsFull</th>
+                    <th>
+                        <a class="btn btn-primary"asp-page="/ViewOffer" asp-route-offerId="@offer.Id" >View Offer</a>
+                        <a class="btn btn-outline-primary" asp-page="/ManageOffer" asp-route-offerId="@offer.Id" >Manage</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
