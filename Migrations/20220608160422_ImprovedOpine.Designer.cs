@@ -12,8 +12,8 @@ using SUDO.Areas.Identity.Data;
 namespace SUDO.Migrations
 {
     [DbContext(typeof(SUDOIdentityDbContext))]
-    [Migration("20220607174954_addbetterratings")]
-    partial class addbetterratings
+    [Migration("20220608160422_ImprovedOpine")]
+    partial class ImprovedOpine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -324,7 +324,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverProfileId1");
 
-                    b.ToTable("Opines");
+                    b.ToTable("Opine");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>

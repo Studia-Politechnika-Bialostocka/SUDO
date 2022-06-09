@@ -23,7 +23,7 @@ namespace SUDO.Pages
         }
         public IActionResult OnGet(int offerId)
         {
-            Offer = _offerService.GetOfferById(offerId);
+            Offer = _offerService.GetOfferManageById(offerId);
             if (_userManager.GetUserId(User) != Offer.DriverId)
                 return RedirectToPage("./BrowseOffers");
 

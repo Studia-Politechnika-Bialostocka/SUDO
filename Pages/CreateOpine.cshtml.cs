@@ -36,7 +36,7 @@ namespace SUDO.Pages
             //TODO check if CurrentUserId is in offer
         }
         public IActionResult OnPost(int offerId) {
-            Offer = _offerService.GetOfferById(offerId);
+            Offer = _offerService.GetOfferManageById(offerId);
             Opine.CurrentUserId = _userManager.GetUserId(User);
             Opine.CommentedUserId = Offer.DriverId;
             Console.WriteLine("halo"+Opine.CommentedUserId);

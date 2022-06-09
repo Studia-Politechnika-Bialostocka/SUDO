@@ -322,7 +322,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverProfileId1");
 
-                    b.ToTable("Opines");
+                    b.ToTable("Opine");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>

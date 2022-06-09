@@ -18,18 +18,18 @@ namespace SUDO.Repositories
         }
         public void AddEntry(Opine entry)
         {
-            _context.Opines.Add(entry);
+            _context.Opine.Add(entry);
             _context.SaveChanges();
         }
 
         public IQueryable<Opine> GetAllEntries()
         {
-            return _context.Opines;
+            return _context.Opine;
         }
 
         public Opine GetOpineById(int id)
         {
-            return _context.Opines.First(o => o.Id == id);
+            return _context.Opine.First(o => o.Id == id);
         }
 
         public void SaveChanges()

@@ -64,7 +64,7 @@ namespace SUDO.Services
             return result;
         }
 
-        public OfferManagingVM GetOfferById(int id) {
+        public OfferManagingVM GetOfferManageById(int id) {
             Offer offer = _offerRepo.GetOfferById(id);
 
             int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
@@ -78,6 +78,28 @@ namespace SUDO.Services
                 MaxPassengerCount = offer.MaxPassengerCount,
                 PassengerTrips = offer.PassengerTrips,
                 IsFull = passengerCount >= offer.MaxPassengerCount,
+            };
+            return oVM;
+        }
+
+        public OfferViewingVM GetOfferViewById(int id) {
+            Offer offer = _offerRepo.GetOfferById(id);
+
+            int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
+            
+            var oVM = new OfferViewingVM() {
+                Id = offer.Id,
+                DriverName = offer.Driver.UserName,
+                Destination = offer.Destination,
+                PassengerCount = passengerCount,
+                MaxPassengerCount = offer.MaxPassengerCount,
+                PassengerTrips = offer.PassengerTrips,
+                IsFull = passengerCount >= offer.MaxPassengerCount,
+                NonSmoking = offer.NonSmoking,
+                Stops = offer.Stops.Split(",").ToList(),
+                Departure = offer.Departure,
+                Arrival = offer.Arrival,
+                Cost = offer.Cost
             };
             return oVM;
         }
