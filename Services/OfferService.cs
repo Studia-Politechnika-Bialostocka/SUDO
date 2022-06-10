@@ -121,6 +121,7 @@ namespace SUDO.Services
             Offer offer = _offerRepo.GetOfferById(id);
 
             int passengerCount = offer.PassengerTrips.Where(pt => pt.Accepted == true).Count();
+
             
             var oVM = new OfferViewingVM() {
                 Id = offer.Id,
@@ -132,7 +133,7 @@ namespace SUDO.Services
                 PassengerTrips = offer.PassengerTrips,
                 IsFull = passengerCount >= offer.MaxPassengerCount,
                 NonSmoking = offer.NonSmoking,
-                Stops = offer.Stops.Split(",").ToList(),
+                Stops = offer.Stops != null ? offer.Stops.Split(",").ToList() : "".Split(", ").ToList(),
                 Departure = offer.Departure,
                 Arrival = offer.Arrival,
                 Cost = offer.Cost
