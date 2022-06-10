@@ -12,5 +12,7 @@ namespace SUDO.Models
 
         public int? TripId {get; set;}
         public virtual Offer Trip {get; set;}
+
+        public bool Accepted {get; set;}
     }
 }

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using SUDO.Models;
 
 namespace SUDO.ViewModels.Offer
 {
@@ -14,6 +11,8 @@ namespace SUDO.ViewModels.Offer
         [StringLength(100, ErrorMessage = "{0} length cannot be greater than {1}.")]
         [Required(ErrorMessage="This field is required.")]    
         public string Destination {get; set;}
+
+        public string? Stops {get; set;}
 
         public string? DriverId {get; set;}
         public string? DriverName {get; set;}
@@ -29,6 +28,11 @@ namespace SUDO.ViewModels.Offer
         [Required(ErrorMessage="This field is required.")]  
         public double Cost {get; set;}
 
+        [Required(ErrorMessage="This field is required.")]
+        public DateTime Departure{get; set;}
+
+        [Required(ErrorMessage="This field is required.")]
+        public DateTime Arrival{get; set;}
         public int PassengerCount {get; set;}
         public bool IsFull {get; set;}
     }
