@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SudoDB") ?? throw new InvalidOperationException("Connection string 'SudoDB' not found.");
 
 builder.Services.AddDbContext<SUDOIdentityDbContext>(options =>
-    options.UseSqlServer(connectionString));;
+    options.UseLazyLoadingProxies().UseSqlServer(connectionString));;
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddSignInManager<MySignInManager>()

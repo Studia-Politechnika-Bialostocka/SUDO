@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SUDO.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using SUDO.Areas.Identity.Data;
 namespace SUDO.Migrations
 {
     [DbContext(typeof(SUDOIdentityDbContext))]
-    partial class SUDOIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220608160422_ImprovedOpine")]
+    partial class ImprovedOpine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,7 +241,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DriverProfiles", (string)null);
+                    b.ToTable("DriverProfiles");
                 });
 
             modelBuilder.Entity("SUDO.Models.Offer", b =>
@@ -279,7 +281,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Offer", (string)null);
+                    b.ToTable("Offer");
                 });
 
             modelBuilder.Entity("SUDO.Models.Opine", b =>
@@ -322,7 +324,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverProfileId1");
 
-                    b.ToTable("Opine", (string)null);
+                    b.ToTable("Opine");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
@@ -340,7 +342,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("PassengerTrips", (string)null);
+                    b.ToTable("PassengerTrips");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

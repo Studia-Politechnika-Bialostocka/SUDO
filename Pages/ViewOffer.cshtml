@@ -1,0 +1,77 @@
+﻿@page "{offerId}"
+@model SUDO.Pages.ViewOfferModel
+@{
+}
+
+@using Microsoft.AspNetCore.Identity
+@using SUDO.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
+<h5 class="display-5">Offer</h5>
+@if(@Model.CurrentDateTime > @Model.Offer.Arrival && @Model.Status == "Accepted") {
+    <a class="btn btn-primary"asp-page="/CreateOpine" asp-route-offerId="@Model.Offer.Id" >Rate Trip</a>
+}
+<a class="btn btn-outline-primary"asp-page="/DriverProfileId" asp-route-driverProfileId="@Model.Offer.DriverId" >Driver Profile</a>
+
+<ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Driver</b> @Model.Offer.DriverName</li>
+    <li class="list-group-item"><b>Destination</b> @Model.Offer.Destination</li>
+    @if (@Model.Offer.Stops[0] != "") {
+    <li class="list-group-item">
+        <b>Stops</b> 
+        <ul class="list-group list-group-flush col-3">
+            @foreach(var stop in @Model.Offer.Stops) {
+                <li class="list-group-item">@stop</li>
+            }
+        </ul>
+    </li>
+    }
+    <li class="list-group-item"><b>Departure</b> @Model.Offer.Departure</li>
+    <li class="list-group-item"><b>Arrival</b> @Model.Offer.Arrival</li>
+    <li class="list-group-item"><b>Cost</b> $@Model.Offer.Cost</li>
+    <li class="list-group-item"><b>Non Smoking</b> @Model.Offer.NonSmoking</li>
+</ul>
+
+<h5 class="display-5">Passengers (@Model.Offer.PassengerCount/@Model.Offer.MaxPassengerCount)</h5>
+<div class="row">
+<ul class="list-group list-group-flush col-4">
+    @foreach(var passenger in @Model.Passengers) {
+        <li class="list-group-item">
+            <span>@passenger.Passenger.UserName</span>
+            @if (passenger.PassengerId == @Model.CurrentUserId)
+            {
+                <form method="post" style="display: inline; float: right;">
+                    <input class="btn btn-outline-danger" type="submit" asp-page-handler="Leave"asp-route-Offer="@Model.Offer.Id" asp-route-PassengerId="@passenger.PassengerId" value="Leave"/>
+                </form>
+            }
+            @if (@Model.Status == "Accepted" && passenger.PassengerId != @Model.CurrentUserId)
+            {
+                <button class="btn btn-outline-primary" style="float: right;">Send Message</button>
+            }
+        </li>
+        
+    }
+</ul>
+<div class="col-8 d-flex align-items-center p-2" style="border: 1px solid rgba(0, 0, 0, 0.125);">
+    <div class="mx-auto">
+        <span>
+            <b>Your Status: </b> 
+            @if (!SignInManager.IsSignedIn(User)) {
+                <span>Log in to view status</span>
+            }
+            @if (SignInManager.IsSignedIn(User)) {
+                @Model.Status
+            }
+        </span>
+        @if (!SignInManager.IsSignedIn(User)) {
+
+        }
+        @if(@Model.Status == "None" && @Model.Offer.PassengerCount < @Model.Offer.MaxPassengerCount && SignInManager.IsSignedIn(User)) {
+            <form  style="display: inline" method="post">
+                <input class="btn btn-outline-success" type="submit" asp-page-handler="Apply" asp-route-OfferId="@Model.Offer.Id" value="Apply"/>
+            </form>
+        }
+    </div>
+</div>
+
+</div>

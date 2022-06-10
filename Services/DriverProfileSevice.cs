@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SUDO.Interfaces.DriverProfiles;
 using SUDO.Interfaces.Users;
+using SUDO.Interfaces.Opines;
 using SUDO.Models;
+using SUDO.ViewModels.Opines;
 using SUDO.ViewModels.DriverProfiles;
 
 namespace SUDO.Services
@@ -16,10 +18,13 @@ namespace SUDO.Services
 
         private readonly IUserRepository _userRepo;
 
-        public DriverProfileSevice(IDriverProfileRepository driverRepo, IUserRepository userRepo)
+        private readonly IOpinesRepository _opineRepo;
+
+        public DriverProfileSevice(IDriverProfileRepository driverRepo, IUserRepository userRepo,IOpinesRepository opineRepo)
         {
             _driverRepo = driverRepo;
             _userRepo = userRepo;
+            _opineRepo = opineRepo;
         }
         public void AddEntry(DriverProfileVM entry)
         {
@@ -31,6 +36,23 @@ namespace SUDO.Services
                 UserOpines = entry.UserOpines,
             };
             _driverRepo.AddEntry(driverProfile);
+        }
+
+        public void AddOpine(OpineVM opinevm, string currentUserId, string commentedUserId)
+        {
+            DriverProfile currentDriver = _driverRepo.GetDriverProfileByUser(currentUserId);
+            DriverProfile commentedUser = _driverRepo.GetDriverProfileByUser(commentedUserId);
+            Opine opine = new Opine{
+                DrivingRating = opinevm.DrivingRating,
+                ProprietyRating = opinevm.ProprietyRating,
+                PunctualityRating = opinevm.PunctualityRating,
+                Comment = opinevm.Comment,
+                CurrentUserId = currentUserId,
+                CommentedUserId = commentedUserId
+            };
+            currentDriver.UserOpines.Add(opine);
+            commentedUser.OpinesAboutUser.Add(opine);
+            _driverRepo.SaveChanges();
         }
 
         public DriverProfileListVM GetAllEntries()
@@ -58,6 +80,7 @@ namespace SUDO.Services
 
         public DriverProfileVM GetDriverProfileByCurrentUser(string id)
         {
+            Console.WriteLine("id:"+id);
                 var driver = _driverRepo.GetDriverProfileByUser(id);  
                 var dVM = new DriverProfileVM()
                 {

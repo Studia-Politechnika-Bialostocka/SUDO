@@ -6,14 +6,31 @@
 <div>
     <h1 class="display-4">Create an Offer</h1>
     <form method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-floating">
             <input asp-for="Offer.Destination" class="form-control" placeholder="Destination"/>
             <label class="text-muted" for="destination ">Destination</label>
+        </div>
+        <div class="form-floating">
+            <input asp-for="Offer.Stops" class="form-control" placeholder="Stops (comma seperated)"/>
+            <label class="text-muted" for="Stops ">Stops (comma seperated)</label>
         </div>
 
         <div class="form-floating">
             <input asp-for="Offer.MaxPassengerCount" class="form-control" min="1" max="8" placeholder="Maximum passengers"/>
             <label class="text-muted" for="passengerCount ">Maximum passengers</label>
+        </div>
+
+        <div class="form-check form-switch">
+            <input asp-for="Offer.Departure" class="form-control" id="Departure" checked>
+            <label class="form-check-label" for="Departure"> Departure </label>
+        </div>
+
+        <div class="form-check form-switch">
+            <input asp-for="Offer.Arrival" class="form-control" id="Arrival" checked>
+            <label class="form-check-label" for="Arrival"> Arrival </label>
         </div>
 
         <div class="form-check form-switch">

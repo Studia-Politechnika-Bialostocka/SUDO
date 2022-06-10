@@ -9,9 +9,9 @@ namespace SUDO.Models
     public class DriverProfile
     {
         public int Id {get;set;}
-        public ApplicationUser User {get; set;}
-        public List<Opine>? OpinesAboutUser {get;set;}
-        public List<Opine>? UserOpines {get;set;}
+        public virtual ApplicationUser User {get; set;}
+        public virtual List<Opine>? OpinesAboutUser {get;set;}
+        public virtual List<Opine>? UserOpines {get;set;}
     }
     
 }

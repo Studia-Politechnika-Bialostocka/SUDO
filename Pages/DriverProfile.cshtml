@@ -3,6 +3,56 @@
 @{
     ViewData["Title"] = "DriverProfile";
 }
-<div>
-    Witaj @Model.DriverProfile.UserName
-</div>
+<h1 class="display-2">Hello @Model.DriverProfile.UserName</h1>
+@if (Model.DriverProfile.OpinesAboutUser.Count != 0) {
+    <h2 class="display-4">Comments about Me</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">DrivingRating</th>
+                <th scope="col">ProprietyRating</th>
+                <th scope="col">PunctualityRating</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Rated By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var opine in Model.DriverProfile.OpinesAboutUser)
+            {
+                <tr>
+                    <th>@opine.DrivingRating</th>
+                    <th>@opine.ProprietyRating</th>
+                    <th>@opine.PunctualityRating</th>
+                    <th>@opine.Comment</th>
+                   <th> <a class="btn btn-outline-primary" asp-page="/DriverProfileId" asp-route-driverProfileId="@opine.CurrentUserId" >Profile</a></th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.DriverProfile.UserOpines.Count != 0) {
+    <h2 class="display-4">Comments I posted</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">DrivingRating</th>
+                <th scope="col">ProprietyRating</th>
+                <th scope="col">PunctualityRating</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Commented Driver</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var opine in Model.DriverProfile.UserOpines)
+            {
+                <tr>
+                    <th>@opine.DrivingRating</th>
+                    <th>@opine.ProprietyRating</th>
+                    <th>@opine.PunctualityRating</th>
+                    <th>@opine.Comment</th>
+                   <th> <a class="btn btn-outline-primary" asp-page="/DriverProfileId" asp-route-driverProfileId="@opine.CommentedUserId" >Profile</a></th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,48 @@
+@page "{driverProfileId}"
+@model SUDO.Pages.DriverProfileIdModel
+@{
+    ViewData["Title"] = "DriverProfileId";
+}
+<h1 class="display-2">Profil  @Model.DriverProfile.UserName</h1>
+@if (Model.DriverProfile.OpinesAboutUser.Count != 0) {
+    double avarageDrivingRating = 0;
+    double avarageProprietyRating =0;
+    double avaragePunctualityRating =0;
+     @foreach (var opine in Model.DriverProfile.OpinesAboutUser)
+     {
+         avarageDrivingRating+=opine.DrivingRating;
+         avarageProprietyRating+=opine.ProprietyRating;
+         avaragePunctualityRating+=opine.PunctualityRating;
+     }
+     Console.WriteLine(avaragePunctualityRating);
+     avarageDrivingRating=avarageDrivingRating/Model.DriverProfile.OpinesAboutUser.Count;
+     avarageProprietyRating=avarageProprietyRating/Model.DriverProfile.OpinesAboutUser.Count;
+     avaragePunctualityRating=avaragePunctualityRating/Model.DriverProfile.OpinesAboutUser.Count;
+    <h4 class="display-8">Avarage Driving Rating: @avarageDrivingRating</h4>
+    <h4 class="display-8">Avarage Propriety Rating: @avarageProprietyRating</h4>
+    <h4 class="display-8">Avarage Punctuality Rating: @avaragePunctualityRating</h4>
+    <h4 class="display-4">Comments about @Model.DriverProfile.UserName</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">DrivingRating</th>
+                <th scope="col">ProprietyRating</th>
+                <th scope="col">PunctualityRating</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Rated By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var opine in Model.DriverProfile.OpinesAboutUser)
+            {
+                <tr>
+                    <th>@opine.DrivingRating</th>
+                    <th>@opine.ProprietyRating</th>
+                    <th>@opine.PunctualityRating</th>
+                    <th>@opine.Comment</th>
+                   <th> <a class="btn btn-outline-primary" asp-page="/DriverProfileId" asp-route-driverProfileId="@opine.CurrentUserId" >Profile</a></th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

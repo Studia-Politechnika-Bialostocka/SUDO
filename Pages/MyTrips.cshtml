@@ -1,0 +1,98 @@
+﻿@page
+@model SUDO.Pages.MyTripsModel
+@{
+}
+
+<h5 class="display-5">Pending Trips</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Driver</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Non Smoking</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var o in @Model.CurrentUser.PendingTrips)
+    {         
+        <tr>
+            <th>@o.Driver.UserName</th>
+            <th>@o.Destination</th>
+            <th>@o.Departure.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>@o.Arrival.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>$@o.Cost</th>
+            <th>@o.NonSmoking</th>
+            <th>
+                <a class="btn btn-primary"asp-page="/ViewOffer" asp-route-offerId="@o.Id" >View Offer</a>
+            </th>
+        </tr>        
+    }
+    </tbody>
+</table>
+
+<h5 class="display-5">Upcoming Trips</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Driver</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Non Smoking</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var o in @Model.CurrentUser.AcceptedTrips)
+    {         
+        <tr>
+            <th>@o.Driver.UserName</th>
+            <th>@o.Destination</th>
+            <th>@o.Departure.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>@o.Arrival.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>$@o.Cost</th>
+            <th>@o.NonSmoking</th>
+            <th>
+                <a class="btn btn-primary"asp-page="/ViewOffer" asp-route-offerId="@o.Id" >View Offer</a>
+            </th>
+        </tr>        
+    }
+    </tbody>
+</table>
+
+<h5 class="display-5">Past Trips</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Driver</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Non Smoking</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var o in @Model.CurrentUser.PastTrips)
+    {         
+        <tr>
+            <th>@o.Driver.UserName</th>
+            <th>@o.Destination</th>
+            <th>@o.Departure.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>@o.Arrival.ToString("MMM dd, yyyy | HH:mm")</th>
+            <th>$@o.Cost</th>
+            <th>@o.NonSmoking</th>
+            <th>
+                <a class="btn btn-primary"asp-page="/ViewOffer" asp-route-offerId="@o.Id" >View Offer</a>
+                <a class="btn btn-primary"asp-page="/CreateOpine" asp-route-offerId="@o.Id" >Rate Trip</a>
+            </th>
+        </tr>        
+    }
+    </tbody>
+</table>

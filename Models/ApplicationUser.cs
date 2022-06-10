@@ -10,6 +10,6 @@ namespace SUDO.Models
     {
         public virtual ICollection<Offer>? Offers {get; set;}
 
-        public ICollection<PassengerTrip> PassengerTrips {get; set;}
+        public virtual ICollection<PassengerTrip> PassengerTrips {get; set;}
     }
 }

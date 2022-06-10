@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SUDO.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using SUDO.Areas.Identity.Data;
 namespace SUDO.Migrations
 {
     [DbContext(typeof(SUDOIdentityDbContext))]
-    partial class SUDOIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220604094103_OfferDepartureArrival")]
+    partial class OfferDepartureArrival
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,7 +241,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DriverProfiles", (string)null);
+                    b.ToTable("DriverProfiles");
                 });
 
             modelBuilder.Entity("SUDO.Models.Offer", b =>
@@ -273,13 +275,14 @@ namespace SUDO.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Stops")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Offer", (string)null);
+                    b.ToTable("Offer");
                 });
 
             modelBuilder.Entity("SUDO.Models.Opine", b =>
@@ -291,13 +294,6 @@ namespace SUDO.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CommentedUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CurrentUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -307,13 +303,7 @@ namespace SUDO.Migrations
                     b.Property<int?>("DriverProfileId1")
                         .HasColumnType("int");
 
-                    b.Property<int>("DrivingRating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProprietyRating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PunctualityRating")
+                    b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -322,7 +312,7 @@ namespace SUDO.Migrations
 
                     b.HasIndex("DriverProfileId1");
 
-                    b.ToTable("Opine", (string)null);
+                    b.ToTable("Opine");
                 });
 
             modelBuilder.Entity("SUDO.Models.PassengerTrip", b =>
@@ -333,14 +323,11 @@ namespace SUDO.Migrations
                     b.Property<int?>("TripId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Accepted")
-                        .HasColumnType("bit");
-
                     b.HasKey("PassengerId", "TripId");
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("PassengerTrips", (string)null);
+                    b.ToTable("PassengerTrips");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

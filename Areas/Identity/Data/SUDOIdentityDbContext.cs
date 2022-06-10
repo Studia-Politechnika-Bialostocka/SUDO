@@ -13,6 +13,7 @@ public class SUDOIdentityDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PassengerTrip> PassengerTrips {get; set;}
     public DbSet<DriverProfile> DriverProfiles {get;set;}
     public DbSet<Opine> Opine {get;set;}
+    
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
